@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Theme Template for Bootstrap</title>
+<link rel="icon" href="/dao_code_builder/view/images/favicon.ico">
+<link href="/dao_code_builder/view/css/bootstrap.min.css" rel="stylesheet">
+<link href="/dao_code_builder/view/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="/dao_code_builder/view/css/theme.css" rel="stylesheet">
+<script src="/dao_code_builder/view/js/ie-emulation-modes-warning.js"></script>
+<script src="/dao_code_builder/view/js/jquery-1.9.1.min.js"></script>
+<script src="/dao_code_builder/view/js/bootstrap.min.js"></script>
+
+</head>
+
+<body role="document">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"><h4>SoonCode</h4></a>
+			</div>
+		</div>
+	</nav>
+	<div class="container theme-showcase" role="main">
+
+		<!-- Main jumbotron for a primary marketing message or call to action -->
+		<!-- <div class="jumbotron">
+			<h1>Dao层代码生成系统</h1>
+			<p>生成*.java,*.xml,entity 等代码</p>
+		</div> -->
+
+		<div class="page-header">
+			<h1>第一步 : 连接数据库</h1>
+
+			<h4>1. 数据库主机IP地址</h4>
+			<input type="text" id="ip" class="form-control" placeholder=" 如：192.168.1.88" required autofocus  value="localhost">
+
+			<h4>2. 端口</h4>
+			<input type="text" id="port" class="form-control" placeholder=" 如：3306" required autofocus value="3306">
+			<h4>3. 数据库名称</h4>
+			
+			<input type="text" id="databaseName" class="form-control" placeholder=" 如：test" required autofocus value ="test">
+
+			<h4>4. 用户名</h4>
+			<input type="text" id="user" class="form-control" placeholder=" 如：root" required autofocus value="root">
+
+			<h4>5. 密码</h4>
+			<input type="password" id="password" class="form-control" placeholder=" 如：root" required autofocus value="hechenwe@gmail.com">
+
+			<div style="height: 12px"></div>
+			<button type="button" class="btn btn-default" onclick="testConnection();">测试链接</button>
+			<span id="message_span_id" style="margin-left: 20px; color: red"></span>
+		</div>
+		<div class="page-header">
+			<h1>第二步 : 环境配置</h1>
+			<h4>1. 工程名称</h4>
+			<input type=" " id="project" class="form-control" placeholder=" 如：daocodebuilder" required autofocus>
+			<!-- <h4>2. 工程工作空间</h4>
+			<input type=" " id="workspace" class="form-control" placeholder=" 如：D:/workspace/sooncode" required autofocus value="D:/workspace/springmvc_freemarker_mybaties"> -->
+			<h4>2. 公司域名（倒写）</h4>
+			<input type=" " id="domainName" class="form-control" placeholder="com.sooncode" required autofocus value="com.sooncode">
+		 
+			<div style="height: 12px"></div>
+			<a style="width: 100px" onclick="next();"  class="btn btn-lg btn-default">下一步</a>
+		</div>
+		<script type="text/javascript">
+			function testConnection() {
+
+				var ip = $("#ip").val();
+				var port = $("#port").val();
+				var user = $("#user").val();
+				var password = $("#password").val();
+				var databaseName = $("#databaseName").val();
+				var urlString = '../indexController/testConnect.html?';
+				
+				$.post(urlString,{ip:ip,port:port,user:user,password:password,databaseName:databaseName},function (reData){
+					 
+					if (reData == "YES") {
+						$("#message_span_id").text("连接成功！");
+					} else {
+						$("#message_span_id").text("连接失败！");
+					}
+					
+				});
+				 
+			}
+			
+			function next(){
+			 
+			var project = $("#project").val();
+			var workspace = $("#workspace").val();
+			var domainName = $("#domainName").val();
+			window.location.href='../indexController/tableList.html?project='+project+"&workspace="+workspace+"&domainName="+domainName;     	
+				
+			}
+		</script>
+</body>
+</html>

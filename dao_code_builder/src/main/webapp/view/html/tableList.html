@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Theme Template for Bootstrap</title>
+<link rel="icon" href="/dao_code_builder/view/images/favicon.ico">
+<link href="/dao_code_builder/view/css/bootstrap.min.css" rel="stylesheet">
+<link href="/dao_code_builder/view/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="/dao_code_builder/view/css/theme.css" rel="stylesheet">
+<link href="/dao_code_builder/view/css/sb-admin-2.css" rel="stylesheet">
+<link href="/dao_code_builder/view/css/font-awesome.min.css" rel="stylesheet">
+<script src="/dao_code_builder/view/js/ie-emulation-modes-warning.js"></script>
+
+<script src="/dao_code_builder/view/js/jquery-1.9.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="../../assets/js/docs.min.js"></script>
+
+<script src="../js/ie10-viewport-bug-workaround.js"></script>
+<style type="text/css">
+.main-top {
+	position: fixed;
+	z-index: 999;
+	top:550px;
+	right:20px;
+	 
+}
+</style>
+
+</head>
+
+<body role="document">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#"><h4>SoonCode</h4></a>
+			</div>
+
+		</div>
+	</nav>
+	<div class="col-md-12 container theme-showcase" role="main">
+		<div style="height: 30px"></div>
+		<div><a style="margin-left: 30px;">表</a></div>
+		<div class="col-md-12">
+			<table class="table table-bordered" align="center">
+				<thead>
+					<tr>
+						<th><h5>模块</h5></th>
+						<th><h5>表名称</h5></th>
+						<th><h5>表</h5></th>  
+						<th><h5>代码选项</h5></th>
+						<th><h5>操作</h5></th>
+					</tr>
+				</thead>
+				<tbody>
+					<#list modules as module> <#list module.tables as table>
+					<tr align="center">
+						<#if table_index == 0>
+						<td rowspan="${module.tableSize}"><a>${module.moduleRemarks}</a></td> <#else> </#if>
+						<td>${table.tableRemarks}</td>
+						<td > ${table.tableName} </td>  
+						<td>
+							<div class="form-group">
+								<label class="checkbox-inline"> <input type="checkbox" id="${table.tableName}Entity" checked="checked">Entity
+								</label> <label class="checkbox-inline"> <input type="checkbox" id="${table.tableName}SQL" checked="checked">SQL
+								</label> <label class="checkbox-inline"> <input type="checkbox" id="${table.tableName}Interface" checked="checked">Interface
+								</label> <label class="checkbox-inline"> <input type="checkbox" id="${table.tableName}Dao" checked="checked">Dao
+								</label> <label class="checkbox-inline"> <input type="checkbox" id="${table.tableName}Service" checked="checked">Service
+								</label> <label class="checkbox-inline"> <input type="checkbox" id="${table.tableName}TestDao" checked="checked">TestDao
+								</label> <label class="checkbox-inline"> <input type="checkbox" id="${table.tableName}TestInterface" checked="checked">TestInterface
+								</label>
+							</div>
+
+						</td>
+						<td><a id="${table.tableName}" onclick="buildCode('${table.tableName}');">生成代码</a></td>
+					</tr>
+
+					</#list> </#list>
+
+				</tbody>
+			</table>
+		</div>
+		
+		<div><font style="margin-left: 30px;" size="4">视图</font></div>
+		<div class="col-md-12">
+			<table class="table table-bordered" align="center">
+				<thead>
+					<tr>
+						<th><h5>视图名称</h5></th>
+						<th><h5>代码选项</h5></th>
+						<th><h5>操作</h5></th>
+					</tr>
+				</thead>
+				<tbody>
+				
+				<#list viewes as view>
+					 <tr>
+					 <td>${view.viewCode}</td>
+					 <td>
+							<div class="form-group">
+								<label class="checkbox-inline"> <input type="checkbox" id="${view.viewCode}ViewEntity" checked="checked">Entity
+								</label> 
+								<label class="checkbox-inline"> <input type="checkbox" id="${view.viewCode}ViewSQL" checked="checked">SQL
+								</label> 
+								<label class="checkbox-inline"> <input type="checkbox" id="${view.viewCode}ViewInterface" checked="checked">Interface
+								</label> 
+								<label class="checkbox-inline"> <input type="checkbox" id="${view.viewCode}ViewDao" checked="checked">Dao
+								</label> 
+								<label class="checkbox-inline"> <input type="checkbox" id="${view.viewCode}ViewService" checked="checked">Service
+								</label> 
+								<label class="checkbox-inline"> <input type="checkbox" id="${view.viewCode}ViewTestDao" checked="checked">TestDao
+								</label> 
+								<label class="checkbox-inline"> <input type="checkbox" id="${view.viewCode}ViewTestInterface" checked="checked">TestInterface
+								</label>
+							</div>
+
+						</td>
+						<td><a id="${view.viewCode}" onclick="buildViewCode('${view.viewCode}');">生成代码</a></td>
+					 </tr>
+					 </#list>
+				</tbody>
+			</table>
+		</div>
+
+		<a class="main-top" href="../downloadController/download.html">
+			<button type="button" class="btn btn-info btn-circle btn-xl">
+				<i class="fa fa-download"></i>
+			</button>
+		</a>
+	</div>
+
+
+	<div class="col-md-12 " style="height: 100px;"></div>
+
+
+	<script type="text/javascript">
+		function buildCode(tableName) {
+
+			var n = 0;
+			var type = new Array();
+
+			if ($("#" + tableName + "Entity").is(':checked')) {
+
+				type[n] = "Entity";
+				n++
+			}
+
+			if ($("#" + tableName + "SQL").is(':checked')) {
+
+				type[n] = "Sql";
+				n++;
+			}
+
+			if ($("#" + tableName + "Interface").is(':checked')) {
+
+				type[n] = "Interface";
+				n++;
+			}
+
+			if ($("#" + tableName + "Dao").is(':checked')) {
+
+				type[n] = "Dao";
+				n++;
+			}
+
+			if ($("#" + tableName + "Service").is(':checked')) {
+
+				type[n] = "Service";
+				n++
+			}
+
+			if ($("#" + tableName + "TestDao").is(':checked')) {
+
+				type[n] = "TestDao";
+				n++
+			}
+
+			if ($("#" + tableName + "TestInterface").is(':checked')) {
+
+				type[n] = "TestInterface";
+				n++
+			}
+			var typeString = "";
+			for (var i = 0; i < type.length; i++) {
+				if (i == type.length - 1) {
+					typeString += type[i] + "";
+				} else {
+					typeString += type[i] + "-";
+				}
+			}
+           
+			$.ajax({
+				url : '../indexController/builderCode.html?tableName=' + tableName + '&type=' + typeString,
+				type : "POST",
+				dataType : 'text',//解析方式
+				success : function(result) {
+
+					if (result === '"YES"') {
+						$("#" + tableName).text("代码生成成功");
+						//alert();
+					} else {
+						$("#" + tableName).text("代码生成失败");
+						alert("代码生成失败");
+					}
+				},
+				error : function(e) {
+				},
+			});
+		}
+		
+		//-------------------------------------生成视图代码--------------------------------------------
+		function buildViewCode(tableName) {
+
+			var n = 0;
+			var type = new Array();
+
+			if ($("#" + tableName + "ViewEntity").is(':checked')) {
+
+				type[n] = "Entity";
+				n++
+			}
+
+			if ($("#" + tableName + "ViewSQL").is(':checked')) {
+
+				type[n] = "SQL";
+				n++;
+			}
+
+			if ($("#" + tableName + "ViewInterface").is(':checked')) {
+
+				type[n] = "Interface";
+				n++;
+			}
+
+			if ($("#" + tableName + "ViewDao").is(':checked')) {
+
+				type[n] = "Dao";
+				n++;
+			}
+
+			if ($("#" + tableName + "ViewService").is(':checked')) {
+
+				type[n] = "Service";
+				n++
+			}
+
+			if ($("#" + tableName + "ViewTestDao").is(':checked')) {
+
+				type[n] = "TestDao";
+				n++
+			}
+
+			if ($("#" + tableName + "ViewTestInterface").is(':checked')) {
+
+				type[n] = "TestInterface";
+				n++
+			}
+			var typeString = "";
+			for (var i = 0; i < type.length; i++) {
+				if (i == type.length - 1) {
+					typeString += type[i] + "";
+				} else {
+					typeString += type[i] + "-";
+				}
+			}
+
+			$.ajax({
+				url : '../indexController/builderViewCode.html?viewCode=' + tableName + '&type=' + typeString,
+				type : "POST",
+				dataType : 'text',//解析方式
+				success : function(result) {
+
+					if (result === '"YES"') {
+						$("#" + tableName).text("代码生成成功");
+						//alert();
+					} else {
+						$("#" + tableName).text("代码生成失败");
+						alert("代码生成失败");
+					}
+				},
+				error : function(e) {
+				},
+			});
+		}
+	</script>
+
+</body>
+</html>
